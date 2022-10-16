@@ -6,7 +6,59 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>购物清单</title>
-  <link rel="stylesheet" href="../css/css.css">
+  <style>
+  * {
+  margin: 0;
+  padding: 0;
+
+}
+
+table {
+  margin: 20px auto;
+  border-collapse: collapse;
+  /*将单元格之间的空隙删除掉*/
+
+}
+
+tr,
+td {
+  width: 120px;
+  height: 50px;
+  border: 1px solid #000;
+  text-align: center;
+  font-size: 18px;
+}
+
+.header {
+  background-color: rgb(247, 246, 247);
+}
+
+.btn,
+.bookname {
+  width: 210px;
+}
+
+button {
+  width: 50px;
+  height: 30px;
+  border: 1px solid greenyellow;
+  color: #fff;
+  background-color: green;
+}
+
+h2 {
+  text-align: center;
+  margin: 20px;
+}
+
+.counts>button {
+  width: 20px;
+  height: 20px;
+  background-color: gray;
+  border: #fff;
+  border-radius: 5px;
+}
+  </style>
 </head>
 
 <body>
@@ -45,7 +97,57 @@
     <h2 v-else>你的购物清单已为空</h2>
   </div>
 </body>
-<script src="../js/vue.min.js"></script>
-<script src="../js/index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+  const vue = new Vue({
+  el: "#app",
+  data: {
+    list: [
+      { bid: 2024, bna: "《数据结构与算法》", dates: "2018-7", price: 76.50, couts: 0 },
+      { bid: 2671, bna: "《计算机原理与应用》", dates: "2018-9", price: 88.00, couts: 0 },
+      { bid: 7012, bna: "《离散数学》", dates: "2019-10", price: 66.00, couts: 0 },
+      { bid: 1677, bna: "《马克思原理》", dates: "2018-5", price: 99.00, couts: 0 },
+      { bid: 1711, bna: "《线性代数》", dates: "2019-6", price: 88.00, couts: 0 },
+      { bid: 1651, bna: "《高等数学（同济版）》", dates: "2016-6", price: 89.00, couts: 0 },
+      { bid: 4131, bna: "《计算机应用基础》", dates: "2021-9", price: 85.50, couts: 0 },
+      { bid: 4325, bna: "《JavaSE基础应用》", dates: "2022-1", price: 64.00, couts: 0 },
+      { bid: 4775, bna: "《Web开发与应用》", dates: "2021-12", price: 99.00, couts: 0 },
+      { bid: 4671, bna: "《Pyhton开发与应用》", dates: "2021-11", price: 88.00, couts: 0 },
+      { bid: 4672, bna: "《移动应用与开发》", dates: "2022-1", price: 61.00, couts: 0 },
+      { bid: 5133, bna: "《云计算概论》", dates: "2021-2", price: 54.00, couts: 0 },
+    ],
+    CountIndex: -1,
+  },
+  filters: {
+    PriceFilters(val) {
+      return "￥" + val.toFixed(2)
+    }
+  },
+  methods: {
+    // 计算总价钱
+    TotalPrice() {
+      let sum = 0
+      for (let book of this.list) {
+        sum += book.price * book.couts
+      }
+      return sum
+    },
+    //增加数量
+    addBc(index, event) {
+      this.list[index].couts += 1
+    },
+    //减少数量 
+    delBc(index, event) {
+      if (this.list[index].couts > 0) {
+        this.list[index].couts -= 1
+      }
+    },
+    //减少项目 
+    RemoveItem(index) {
+      this.list.splice(index, 1)
+    },
+  },
+})
+</script>
 
 </html>
